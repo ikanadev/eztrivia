@@ -1,8 +1,11 @@
-import { Component } from 'solid-js';
+import { AppProvider } from '@app/context';
+import Main from '@app/screens/Main';
 
-const App: Component = () => {
+const App = () => {
   return (
-    <h1>Hello</h1>
+    <AppProvider>
+      <Main />
+    </AppProvider>
   );
 };
 
