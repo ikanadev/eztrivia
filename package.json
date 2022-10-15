@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@iconify-json/ion": "^1.1.4",
     "@types/node": "^18.8.5",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
+    "@unocss/preset-icons": "^0.45.29",
+    "@unocss/preset-wind": "^0.45.29",
     "eslint": "^8.25.0",
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -20,11 +23,13 @@
     "eslint-plugin-promise": "^6.1.0",
     "eslint-plugin-solid": "^0.7.3",
     "typescript": "^4.6.4",
+    "unocss": "^0.45.29",
     "vite": "^3.1.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-solid": "^2.3.9"
   },
   "dependencies": {
+    "@unocss/reset": "^0.45.29",
     "solid-js": "^1.5.7"
   }
 }
