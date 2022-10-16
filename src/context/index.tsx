@@ -1,36 +1,36 @@
 import { createContext, useContext, ParentComponent } from 'solid-js';
+import { createStore } from 'solid-js/store';
 
-import { Screen, ColorMode, AppState, AppContextState } from '@app/utils/types';
-import colorMode from './colorMode';
+import { Screen, AppState, AppContextState, Hero } from '@app/utils/types';
 import useScreen from './useScreen';
 
 const getEmptyState = (): AppState => ({
   screen: () => Screen.Home,
-  colorMode: () => ColorMode.Light,
+  heroes: [],
 });
 
 const AppContext = createContext<AppContextState>({
   state: getEmptyState(),
   actions: {
-    toggleColorMode: () => undefined,
     setScreen: () => undefined,
+    setHeroes: () => undefined,
   },
 });
 
 export const AppProvider: ParentComponent = (props) => {
-  const { color, toggle } = colorMode();
   const { screen, setScreen } = useScreen();
+  const [heroes, setHeroes] = createStore<Hero[]>([]);
 
   return (
     <AppContext.Provider
       value={{
         state: {
           screen,
-          colorMode: color,
+          heroes,
         },
         actions: {
-          toggleColorMode: toggle,
           setScreen,
+          setHeroes,
         },
       }}>
       {props.children}

@@ -16,11 +16,21 @@ export default defineConfig({
     solidPlugin(),
     eslint(),
     UnoCss({
-      safelist: 'bg-dark-8 bg-light-1'.split(' '),
+      safelist: 'bg-bg'.split(' '),
       presets: [
         presetWind(),
         presetIcons(),
       ],
+      theme: {
+        colors: {
+          bg: '#100018',
+          prim: {
+            base: '#2a6395',
+            light: '#5b80a3',
+            lighter: '#c7e5fd',
+          },
+        },
+      },
     }),
   ],
   server: {
