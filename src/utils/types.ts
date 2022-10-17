@@ -23,6 +23,7 @@ export interface AppActions {
   setScreen: (screen: Screen) => void
   setHeroes: (heroes: Hero[]) => void
   setPoints: Setter<number>
+  reset: () => void
 }
 
 export interface AppContextState {

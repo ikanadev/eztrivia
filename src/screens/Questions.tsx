@@ -49,10 +49,13 @@ const Questions = () => {
     setAnswer(index);
   };
   const handleFinish = () => {
-    setScreen(Screen.Final);
+    if (question().correctIndex === answer()) {
+      setPoints(prev => prev + 1);
+    }
     setNro(1);
     setAnswer(null);
     setQuestion(getQuestion());
+    setScreen(Screen.Final);
   };
 
   return (

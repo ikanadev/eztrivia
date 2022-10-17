@@ -2,6 +2,7 @@ import { Switch, Match, createEffect, createResource } from 'solid-js';
 import { Screen } from '@app/utils/types';
 import Home from './Home';
 import Questions from './Questions';
+import EndScreen from './EndScreen';
 
 import { useState } from '@app/context';
 import { getHeroData } from '@app/utils/functions';
@@ -28,6 +29,9 @@ const Main = () => {
             </Match>
             <Match when={state.screen() === Screen.Questions}>
               <Questions />
+            </Match>
+            <Match when={state.screen() === Screen.Final}>
+              <EndScreen />
             </Match>
           </Switch>
         </Match>

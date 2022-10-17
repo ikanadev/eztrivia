@@ -16,6 +16,7 @@ const AppContext = createContext<AppContextState>({
     setScreen: () => undefined,
     setHeroes: () => undefined,
     setPoints: (() => undefined) as Setter<number>,
+    reset: () => undefined,
   },
 });
 
@@ -23,6 +24,11 @@ export const AppProvider: ParentComponent = (props) => {
   const [points, setPoints] = createSignal(0);
   const { screen, setScreen } = useScreen();
   const [heroes, setHeroes] = createStore<Hero[]>([]);
+
+  const reset = () => {
+    setPoints(0);
+    setScreen(Screen.Home);
+  };
 
   return (
     <AppContext.Provider
@@ -36,6 +42,7 @@ export const AppProvider: ParentComponent = (props) => {
           setScreen,
           setHeroes,
           setPoints,
+          reset,
         },
       }}>
       {props.children}
