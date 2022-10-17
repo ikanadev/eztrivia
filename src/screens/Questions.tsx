@@ -1,6 +1,6 @@
 import { createSignal, createEffect, For, Show, on } from 'solid-js';
 import { Button, Counter } from '@app/comps';
-import { Question } from '@app/utils/types';
+import { Question, Screen } from '@app/utils/types';
 
 import { useState } from '@app/context';
 
@@ -15,6 +15,7 @@ const getQuestion = (): Question => {
 };
 
 const SECONDS = 5;
+const MAX_QUESTIONS = 10;
 
 const Questions = () => {
   const [counterReset, setCounterReset] = createSignal(true);
@@ -22,13 +23,13 @@ const Questions = () => {
   const [answer, setAnswer] = createSignal<number | null>(null);
 
   const [question, setQuestion] = createSignal<Question>(getQuestion());
-  const { state } = useState();
+  const { state, actions: { setPoints, setScreen } } = useState();
   let questionTimer: NodeJS.Timeout;
 
   createEffect(() => {
     console.log(state.heroes.length);
   });
-  createEffect(on(nro, (n) => {
+  createEffect(on(nro, () => {
     clearTimeout(questionTimer);
     questionTimer = setTimeout(() => handleAnswer(5), SECONDS * 1000);
   }));
@@ -36,7 +37,7 @@ const Questions = () => {
   const handleNextQuestion = () => {
     if (answer() === null) return;
     if (question().correctIndex === answer()) {
-      console.log('OK');
+      setPoints(prev => prev + 1);
     }
     setAnswer(null);
     setCounterReset(true);
@@ -46,6 +47,12 @@ const Questions = () => {
   const handleAnswer = (index: number) => {
     if (answer() !== null) return;
     setAnswer(index);
+  };
+  const handleFinish = () => {
+    setScreen(Screen.Final);
+    setNro(1);
+    setAnswer(null);
+    setQuestion(getQuestion());
   };
 
   return (
@@ -59,7 +66,7 @@ const Questions = () => {
             <div class="rounded-3 overflow-hidden self-center">
               <img src={question().imgUrl} />
             </div>
-            <p class="text-sm mt-8">{`${nro()} of 10`}</p>
+            <p class="text-sm mt-8">{`${nro()} of ${MAX_QUESTIONS}`}</p>
             <h3 class="text-2xl font-500 mb-4">
               {question().question}
             </h3>
@@ -86,8 +93,16 @@ const Questions = () => {
 
             <Show when={answer() !== null}>
               <div class="flex justify-end mt-4">
-                <Button onClick={handleNextQuestion}>
-                  Next
+                <Button
+                  onClick={() => {
+                    if (nro() === MAX_QUESTIONS) {
+                      handleFinish();
+                      return;
+                    }
+                    handleNextQuestion();
+                  }}
+                >
+                  {nro() === MAX_QUESTIONS ? 'Finish' : 'Next'}
                 </Button>
               </div>
             </Show>

@@ -1,4 +1,4 @@
-import { Accessor } from 'solid-js';
+import { Accessor, Setter } from 'solid-js';
 
 export enum Screen {
   Home = 'Home',
@@ -17,10 +17,12 @@ export interface Question {
 export interface AppState {
   screen: Accessor<Screen>
   heroes: Hero[]
+  points: Accessor<number>
 }
 export interface AppActions {
   setScreen: (screen: Screen) => void
   setHeroes: (heroes: Hero[]) => void
+  setPoints: Setter<number>
 }
 
 export interface AppContextState {

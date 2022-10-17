@@ -1,4 +1,4 @@
-import { createContext, useContext, ParentComponent } from 'solid-js';
+import { createContext, useContext, ParentComponent, createSignal, Setter } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { Screen, AppState, AppContextState, Hero } from '@app/utils/types';
@@ -7,6 +7,7 @@ import useScreen from './useScreen';
 const getEmptyState = (): AppState => ({
   screen: () => Screen.Home,
   heroes: [],
+  points: () => 0,
 });
 
 const AppContext = createContext<AppContextState>({
@@ -14,10 +15,12 @@ const AppContext = createContext<AppContextState>({
   actions: {
     setScreen: () => undefined,
     setHeroes: () => undefined,
+    setPoints: (() => undefined) as Setter<number>,
   },
 });
 
 export const AppProvider: ParentComponent = (props) => {
+  const [points, setPoints] = createSignal(0);
   const { screen, setScreen } = useScreen();
   const [heroes, setHeroes] = createStore<Hero[]>([]);
 
@@ -27,10 +30,12 @@ export const AppProvider: ParentComponent = (props) => {
         state: {
           screen,
           heroes,
+          points,
         },
         actions: {
           setScreen,
           setHeroes,
+          setPoints,
         },
       }}>
       {props.children}
