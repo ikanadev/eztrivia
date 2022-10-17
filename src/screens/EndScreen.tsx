@@ -23,12 +23,12 @@ const EndScreen = () => {
 
   return (
     <main>
-      <div class="flex justify-center px-2 mt-20 text-lg">
+      <div class="flex justify-center px-2 mt-8 md:mt-20 text-lg">
         <div class="flex flex-col max-w-md flex-1">
           <p>{`${getReaction()} you got:`}</p>
           <p
             classList={{
-              'self-center font-700 py-4 text-9xl -my-2': true,
+              'self-center font-700 py-4 text-9xl -my-6': true,
               'text-red-6': state.points() < 3,
               'text-orange-5': state.points() >= 3 && state.points() <= 5,
               'text-teal-6': state.points() >= 6 && state.points() <= 8,

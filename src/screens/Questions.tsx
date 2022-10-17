@@ -1,34 +1,22 @@
 import { createSignal, createEffect, For, Show, on } from 'solid-js';
 import { Button, Counter } from '@app/comps';
 import { Question, Screen } from '@app/utils/types';
+import { getRandomQuestion } from '@app/utils/functions';
 
 import { useState } from '@app/context';
 
-const getQuestion = (): Question => {
-  return {
-    // imgUrl: 'img/skills/abaddon_aphotic_shield.png',
-    imgUrl: 'img/heroes/abaddon.png',
-    question: 'What is the name of this ability? and some random text to make this question larger?',
-    options: ['Mana burn', 'Black hole', 'Aphotic Shield', 'Mistic Flare'],
-    correctIndex: 2,
-  };
-};
-
-const SECONDS = 5;
+const SECONDS = 8;
 const MAX_QUESTIONS = 10;
 
 const Questions = () => {
   const [counterReset, setCounterReset] = createSignal(true);
   const [nro, setNro] = createSignal(1);
   const [answer, setAnswer] = createSignal<number | null>(null);
-
-  const [question, setQuestion] = createSignal<Question>(getQuestion());
   const { state, actions: { setPoints, setScreen } } = useState();
+
+  const [question, setQuestion] = createSignal<Question>(getRandomQuestion(state.heroes));
   let questionTimer: NodeJS.Timeout;
 
-  createEffect(() => {
-    console.log(state.heroes.length);
-  });
   createEffect(on(nro, () => {
     clearTimeout(questionTimer);
     questionTimer = setTimeout(() => handleAnswer(5), SECONDS * 1000);
@@ -42,7 +30,7 @@ const Questions = () => {
     setAnswer(null);
     setCounterReset(true);
     setNro(prev => prev + 1);
-    setQuestion(getQuestion());
+    setQuestion(getRandomQuestion(state.heroes));
   };
   const handleAnswer = (index: number) => {
     if (answer() !== null) return;
@@ -52,9 +40,6 @@ const Questions = () => {
     if (question().correctIndex === answer()) {
       setPoints(prev => prev + 1);
     }
-    setNro(1);
-    setAnswer(null);
-    setQuestion(getQuestion());
     setScreen(Screen.Final);
   };
 
