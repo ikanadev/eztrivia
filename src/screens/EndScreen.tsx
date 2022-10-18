@@ -38,7 +38,10 @@ const EndScreen = () => {
             {state.points}
           </p>
           <p class="text-right mb-10">correct answers!</p>
-          <p>{getPoinsDesc(state.points())}</p>
+          <div class="flex items-start mt-2">
+            <div class="i-mdi-robot mr-2 text-3xl" />
+            <p>{getPoinsDesc(state.points())}</p>
+          </div>
           <div class="flex justify-center mt-8">
             <Button onClick={reset}>
               <span>Retry</span>

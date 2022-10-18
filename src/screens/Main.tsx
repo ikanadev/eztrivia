@@ -36,7 +36,10 @@ const Main = () => {
           </Switch>
         </Match>
         <Match when={heroes.loading}>
-          <p class="mt-8 text-center">Loadng data...</p>
+          <div class="flex justify-center items-center mt-16">
+            <div class="i-mdi-robot mr-2 text-3xl" />
+            <p class="text-center">Stealing data from valve...</p>
+          </div>
         </Match>
       </Switch>
     </div>

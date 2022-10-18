@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@iconify-json/ion': ^1.1.4
+  '@iconify-json/mdi': ^1.1.34
   '@types/babel__core': ^7.1.19
   '@types/node': ^18.8.5
   '@typescript-eslint/eslint-plugin': ^5.40.0
@@ -28,6 +29,7 @@ dependencies:
 
 devDependencies:
   '@iconify-json/ion': 1.1.4
+  '@iconify-json/mdi': 1.1.34
   '@types/babel__core': 7.1.19
   '@types/node': 18.8.5
   '@typescript-eslint/eslint-plugin': 5.40.0_25sstg4uu2sk4pm7xcyzuov7xq
@@ -429,6 +431,12 @@ packages:
 
   /@iconify-json/ion/1.1.4:
     resolution: {integrity: sha512-30sOiE7OIboJXCFqIUfyAcskE49pEUjPyQs2Pl35o4lBXKZ46Jy3RzD+atkWBVz6ftlvTk9jE/qFi2mZ+gk78g==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/mdi/1.1.34:
+    resolution: {integrity: sha512-Jle/BrVmaKMMPVitsO3lbJ8VpXUVCAhfMFAMo0VoxLDX8ZiKiQyVDHXPug9wGaXYb9mrFZE4UWVK63Cjx8L3rQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
