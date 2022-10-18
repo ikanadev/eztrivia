@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@iconify-json/ion": "^1.1.4",
+    "@types/babel__core": "^7.1.19",
     "@types/node": "^18.8.5",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
