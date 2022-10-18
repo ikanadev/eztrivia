@@ -38,7 +38,7 @@ interface AbilitySpecialValue {
   is_percentage: boolean
   heading_loc: string
 }
-interface Ability {
+export interface Ability {
   id: number
   name: string
   name_loc: string

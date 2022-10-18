@@ -1,5 +1,5 @@
-import { Hero, Question } from '@app/utils/types';
-import { OPTIONS } from '@app/utils/constants';
+import { Hero, Ability, Question } from '@app/utils/types';
+import { OPTIONS, MAX_SKILL_FIND_TRIES } from '@app/utils/constants';
 
 import { badDescriptions, regularDescriptions, goodDescriptions, awesomeDescriptions } from './constants';
 
@@ -31,6 +31,26 @@ export const getPoinsDesc = (points: number) => {
 
 export const getRandomItem = <T>(items: T[]): T => {
   return items[Math.floor(Math.random() * items.length)];
+};
+
+const getSimilarValuesFromArr = (
+  values: number[],
+  valuesAhead: number,
+  step: number,
+): number[][] => {
+  const arr: number[][] = [];
+  values.forEach((val) => {
+    arr.push(getSimilarValues(val, valuesAhead, step));
+  });
+  const res: number[][] = [];
+  arr[0].forEach((_, i) => {
+    const rowValues: number[] = [];
+    arr.forEach((row) => {
+      rowValues.push(row[i]);
+    });
+    res.push(rowValues);
+  });
+  return res;
 };
 
 const getSimilarValues = (value: number, valuesAhead: number, step: number): number[] => {
@@ -137,15 +157,110 @@ const getAttackQuestion = (hero: Hero): Question | null => {
   const maxDamageValues = getSimilarValues(hero.damage_max, questionsAhead, 5);
   return {
     correctIndex,
-    question: `What is the base damage of ${hero.name_loc}`,
+    question: `What is the base damage of ${hero.name_loc}?`,
     imgUrl: `img/heroes/${hero.name.substring(14)}.png`,
     options: minDamageValues.map((min, i) => `${min} - ${maxDamageValues[i]}`),
   };
 };
 
+const getHeroSkillCastRangeQuestion = (hero: Hero): Question | null => {
+  let ability: Ability | null = null;
+  let tries = 1;
+  while (ability === null) {
+    const ab = getRandomItem(hero.abilities);
+    if (ab.cast_ranges.length === 0) {
+      tries++;
+      continue;
+    }
+    if (ab.cast_ranges[0] > 0) {
+      ability = ab;
+    } else {
+      // 20 tries before giving up
+      if (tries >= MAX_SKILL_FIND_TRIES) return null;
+      tries++;
+    }
+  }
+  console.log('skill cast range', JSON.stringify(ability.cast_ranges), hero.name_loc);
+  const questionsAhead = getQuestionsAhead();
+  const correctIndex = OPTIONS - questionsAhead - 1;
+  const optionValues = getSimilarValuesFromArr(ability.cast_ranges, questionsAhead, 50);
+  const isPlural = ability.cast_ranges.length > 1;
+  return {
+    correctIndex,
+    question: `What ${isPlural ? 'are' : 'is'
+      } the cast ${isPlural ? 'ranges' : 'range'
+      } of ${ability.name_loc}?`,
+    imgUrl: `img/skills/${ability.name}.png`,
+    options: optionValues.map((values) => values.join(' / ')),
+  };
+};
+
+const getHeroSkillCooldownQuestion = (hero: Hero): Question | null => {
+  let ability: Ability | null = null;
+  let tries = 1;
+  while (ability === null) {
+    const ab = getRandomItem(hero.abilities);
+    if (ab.cooldowns.length === 0) {
+      tries++;
+      continue;
+    }
+    if (ab.cooldowns[0] > 0) {
+      ability = ab;
+    } else {
+      // 20 tries
+      if (tries >= MAX_SKILL_FIND_TRIES) return null;
+      tries++;
+    }
+  }
+  console.log('skill cooldown', JSON.stringify(ability.cooldowns), hero.name_loc);
+  const questionsAhead = getQuestionsAhead();
+  const correctIndex = OPTIONS - questionsAhead - 1;
+  const optionValues = getSimilarValuesFromArr(ability.cooldowns, questionsAhead, 5);
+  const isPlural = ability.cooldowns.length > 1;
+  return {
+    correctIndex,
+    question: `What ${isPlural ? 'are' : 'is'
+      } the ${isPlural ? 'cooldowns' : 'cooldown'
+      } of ${ability.name_loc}`,
+    imgUrl: `img/skills/${ability.name}.png`,
+    options: optionValues.map((values) => values.join(' / ')),
+  };
+};
+
+const getHeroSkillManaCostQuestion = (hero: Hero): Question | null => {
+  let ability: Ability | null = null;
+  let tries = 1;
+  while (ability === null) {
+    const ab = getRandomItem(hero.abilities);
+    if (ab.mana_costs.length === 0) {
+      tries++;
+      continue;
+    }
+    if (ab.mana_costs[0] > 0) {
+      ability = ab;
+    } else {
+      if (tries >= MAX_SKILL_FIND_TRIES) return null;
+      tries++;
+    }
+  }
+  console.log('mana cost', JSON.stringify(ability.mana_costs), hero.name_loc);
+  const questionsAhead = getQuestionsAhead();
+  const correctIndex = OPTIONS - questionsAhead - 1;
+  const optionValues = getSimilarValuesFromArr(ability.mana_costs, questionsAhead, 10);
+  const isPlural = ability.mana_costs.length > 1;
+  return {
+    correctIndex,
+    question: `What ${isPlural ? 'are' : 'is'
+      } the mana ${isPlural ? 'costs' : 'cost'
+      } of ${ability.name_loc}`,
+    imgUrl: `img/skills/${ability.name}.png`,
+    options: optionValues.map((values) => values.join(' / ')),
+  };
+};
+
 export const getRandomQuestion = (heroes: Hero[]): Question => {
   let question: null | Question = null;
-  const questionTypes = [0, 1, 2, 3, 4, 5];
+  const questionTypes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   while (question === null) {
     switch (getRandomItem(questionTypes)) {
       case 0:
@@ -165,6 +280,15 @@ export const getRandomQuestion = (heroes: Hero[]): Question => {
         break;
       case 5:
         question = getAttackQuestion(getRandomItem(heroes));
+        break;
+      case 6:
+        question = getHeroSkillCastRangeQuestion(getRandomItem(heroes));
+        break;
+      case 7:
+        question = getHeroSkillCooldownQuestion(getRandomItem(heroes));
+        break;
+      case 8:
+        question = getHeroSkillManaCostQuestion(getRandomItem(heroes));
         break;
     }
   }

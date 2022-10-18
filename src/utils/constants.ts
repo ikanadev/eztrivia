@@ -1,5 +1,6 @@
 export const COLOR_MODE = 'COLOR_MODE';
 export const OPTIONS = 4;
+export const MAX_SKILL_FIND_TRIES = 20;
 export const badDescriptions = [
   'How do you even play dota',
   'Good luck in your Herald ranks!',
@@ -15,7 +16,7 @@ export const regularDescriptions = [
   'Good luck in your Crusader ranks!',
   'So... you come from Lol or something similar?',
   'Come on!, it\'s not that hard, you just need about 10k hours of gameplay',
-  'What would Gaben say about this?',
+  'What Gaben would say about this?',
   'Honestly, I was expecting more of you',
   'Was it hard? That\'s what she said!',
   'You have to improve if you want to win your ranks',
