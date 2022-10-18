@@ -80,7 +80,7 @@ const roundWithDecimals = (n: number, places: number): number => {
 const getBaseArmorQuestion = (hero: Hero): Question | null => {
   const armor = roundWithDecimals(hero.armor, 1);
   if (isNaN(armor) || armor === 0) return null;
-  console.log('Armor question', armor, hero.name_loc);
+  // console.log('Armor question', armor, hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionsValues = getSimilarValues(armor, questionsAhead, 0.5);
@@ -94,7 +94,7 @@ const getBaseArmorQuestion = (hero: Hero): Question | null => {
 
 const getBaseManaQuestion = (hero: Hero): Question | null => {
   if (hero.max_mana === 0) return null;
-  console.log('Mana question', hero.max_mana, hero.name_loc);
+  // console.log('Mana question', hero.max_mana, hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionsValues = getSimilarValues(hero.max_mana, questionsAhead, 50);
@@ -108,7 +108,7 @@ const getBaseManaQuestion = (hero: Hero): Question | null => {
 
 const getBaseHealthQuestion = (hero: Hero): Question | null => {
   if (hero.max_health === 0) return null;
-  console.log('Health question', hero.max_health, hero.name_loc);
+  // console.log('Health question', hero.max_health, hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionsValues = getSimilarValues(hero.max_health, questionsAhead, 50);
@@ -122,7 +122,7 @@ const getBaseHealthQuestion = (hero: Hero): Question | null => {
 
 const getMovementSpeedQuestion = (hero: Hero): Question | null => {
   if (hero.movement_speed === 0) return null;
-  console.log('MS question', hero.movement_speed, hero.name_loc);
+  // console.log('MS question', hero.movement_speed, hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionsValues = getSimilarValues(hero.movement_speed, questionsAhead, 10);
@@ -136,7 +136,7 @@ const getMovementSpeedQuestion = (hero: Hero): Question | null => {
 
 const getRangeQuestion = (hero: Hero): Question | null => {
   if (hero.attack_range === 0) return null;
-  console.log('Attack range question', hero.attack_range, hero.name_loc);
+  // console.log('Attack range question', hero.attack_range, hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionsValues = getSimilarValues(hero.attack_range, questionsAhead, 10);
@@ -150,7 +150,7 @@ const getRangeQuestion = (hero: Hero): Question | null => {
 
 const getAttackQuestion = (hero: Hero): Question | null => {
   if (hero.damage_max === 0 || hero.damage_min === 0) return null;
-  console.log('Damage question', hero.damage_min, hero.damage_max, hero.name_loc);
+  // console.log('Damage question', hero.damage_min, hero.damage_max, hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const minDamageValues = getSimilarValues(hero.damage_min, questionsAhead, 5);
@@ -180,7 +180,7 @@ const getHeroSkillCastRangeQuestion = (hero: Hero): Question | null => {
       tries++;
     }
   }
-  console.log('skill cast range', JSON.stringify(ability.cast_ranges), hero.name_loc);
+  // console.log('skill cast range', JSON.stringify(ability.cast_ranges), hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionValues = getSimilarValuesFromArr(ability.cast_ranges, questionsAhead, 50);
@@ -212,7 +212,7 @@ const getHeroSkillCooldownQuestion = (hero: Hero): Question | null => {
       tries++;
     }
   }
-  console.log('skill cooldown', JSON.stringify(ability.cooldowns), hero.name_loc);
+  // console.log('skill cooldown', JSON.stringify(ability.cooldowns), hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionValues = getSimilarValuesFromArr(ability.cooldowns, questionsAhead, 5);
@@ -243,7 +243,7 @@ const getHeroSkillManaCostQuestion = (hero: Hero): Question | null => {
       tries++;
     }
   }
-  console.log('mana cost', JSON.stringify(ability.mana_costs), hero.name_loc);
+  // console.log('mana cost', JSON.stringify(ability.mana_costs), hero.name_loc);
   const questionsAhead = getQuestionsAhead();
   const correctIndex = OPTIONS - questionsAhead - 1;
   const optionValues = getSimilarValuesFromArr(ability.mana_costs, questionsAhead, 10);
