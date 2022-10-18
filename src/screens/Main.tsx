@@ -36,7 +36,7 @@ const Main = () => {
           </Switch>
         </Match>
         <Match when={heroes.loading}>
-          <p>Cargando....</p>
+          <p class="mt-8 text-center">Loadng data...</p>
         </Match>
       </Switch>
     </div>
